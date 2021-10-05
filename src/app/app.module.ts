@@ -8,24 +8,30 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 
 import 'hammerjs';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 import { DishDetailComponent } from './dishdetail/dishdetail.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { DishService } from './services/dish.service';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AboutComponent,
+    ContactComponent,
     DishDetailComponent,
-    MenuComponent,
+    FooterComponent,
     HeaderComponent,
-    FooterComponent
+    HomeComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

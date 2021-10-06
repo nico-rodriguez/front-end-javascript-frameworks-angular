@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,6 +24,7 @@ import { MenuComponent } from './menu/menu.component';
 import { DishService } from './services/dish.service';
 import { LeaderService } from './services/leader.service';
 import { PromotionService } from './services/promotion.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,14 @@ import { PromotionService } from './services/promotion.service';
     FooterComponent,
     HeaderComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatDialogModule,
     MatCardModule,
     MatGridListModule,
     MatListModule,
@@ -51,6 +55,9 @@ import { PromotionService } from './services/promotion.service';
     LeaderService,
     PromotionService
   ],
+  // entryComponents: [
+  //   LoginComponent
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

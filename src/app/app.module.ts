@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './routing/app-routing.module';
@@ -42,11 +46,15 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatDialogModule,
     MatCardModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
     MatGridListModule,
+    MatInputModule,
     MatListModule,
     MatToolbarModule,
+    FormsModule,
     FlexLayoutModule,
     AppRoutingModule
   ],

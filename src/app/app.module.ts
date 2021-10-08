@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -56,6 +57,7 @@ import { LoginComponent } from './login/login.component';
     MatGridListModule,
     MatInputModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSlideToggleModule,
     MatToolbarModule,

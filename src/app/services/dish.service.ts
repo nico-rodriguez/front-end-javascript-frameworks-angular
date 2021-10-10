@@ -28,4 +28,8 @@ export class DishService {
       // Simulate server latency
       .pipe(delay(2000));
   }
+
+  getDishIds(): Observable<string[]> {
+    return of(DISHES.map(dish => dish.id));
+  }
 }

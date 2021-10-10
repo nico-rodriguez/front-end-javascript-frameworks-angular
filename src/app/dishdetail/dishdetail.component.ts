@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -14,6 +15,9 @@ import { DishService } from '../services/dish.service';
 export class DishDetailComponent implements OnInit {
 
   dish!: Dish;
+  dishIds!: string[];
+  prev!: string;
+  next!: string;
 
   constructor(
     private dishService: DishService,
@@ -22,9 +26,20 @@ export class DishDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const dishId = this.route.snapshot.params['id'];
-    this.dishService.getDish(dishId)
-      .subscribe(dish => this.dish = dish);
+    this.dishService.getDishIds()
+      .subscribe(dishIds => this.dishIds = dishIds);
+    this.route.params
+      .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
+      .subscribe(dish => {
+        this.dish = dish;
+        this.setPrevNext(dish.id);
+      });
+  }
+
+  setPrevNext(dishId: string) {
+    const dishIndex = this.dishIds.indexOf(dishId);
+    this.prev = this.dishIds[((dishIndex - 1) + this.dishIds.length) % this.dishIds.length]
+    this.next = this.dishIds[((dishIndex + 1) + this.dishIds.length) % this.dishIds.length]
   }
 
   goBack(): void {

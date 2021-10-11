@@ -29,13 +29,14 @@ import { DishDetailComponent } from './dishdetail/dishdetail.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 
 import { baseURL } from './shared/config';
 import { DishService } from './services/dish.service';
 import { LeaderService } from './services/leader.service';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { PromotionService } from './services/promotion.service';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { LoginComponent } from './login/login.component';
     { provide: 'BaseURL', useValue: baseURL},
     DishService,
     LeaderService,
+    ProcessHTTPMsgService,
     PromotionService
   ],
   // entryComponents: [

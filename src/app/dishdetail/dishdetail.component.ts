@@ -17,6 +17,7 @@ import { switchMap } from 'rxjs/operators';
 export class DishDetailComponent implements OnInit {
 
   dish!: Dish;
+  errMsg!: string;
   dishIds!: string[];
   prev!: string;
   next!: string;
@@ -59,7 +60,8 @@ export class DishDetailComponent implements OnInit {
       .subscribe(dish => {
         this.dish = dish;
         this.setPrevNext(dish.id);
-      });
+      },
+        errMsg => this.errMsg = errMsg);
   }
 
   setPrevNext(dishId: string) {

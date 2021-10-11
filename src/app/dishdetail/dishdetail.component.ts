@@ -16,14 +16,15 @@ import { switchMap } from 'rxjs/operators';
 })
 export class DishDetailComponent implements OnInit {
 
-  dish!: Dish;
+  dish!: Dish | null;
   errMsg!: string;
   dishIds!: string[];
   prev!: string;
   next!: string;
 
-  commentForm!: FormGroup;
   comment!: Comment;
+  commentForm!: FormGroup;
+  dishCopy!: Dish | null;
 
   @ViewChild('cform') commentFormDirective: any;
 
@@ -59,6 +60,7 @@ export class DishDetailComponent implements OnInit {
       .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
       .subscribe(dish => {
         this.dish = dish;
+        this.dishCopy = dish;
         this.setPrevNext(dish.id);
       },
         errMsg => this.errMsg = errMsg);
@@ -115,13 +117,21 @@ export class DishDetailComponent implements OnInit {
   onSubmit(): void {
     this.comment = {...this.commentForm.value, date: new Date().toISOString()};
     console.log(this.comment);
-    this.dish.comments.push(this.comment);
+    (<Dish>this.dishCopy).comments.push(this.comment);
+    this.dishService.putDish(<Dish>this.dishCopy)
+      .subscribe(dish => {
+        this.dish = dish;
+      }, errMsg => {
+        this.errMsg = errMsg;
+        this.dish = null;
+        this.dishCopy = null;
+      })
+    this.commentFormDirective.resetForm();
     this.commentForm.reset({
       author: '',
       rating: 5,
       comment: ''
     });
-    this.commentFormDirective.resetForm();
   }
 
 }

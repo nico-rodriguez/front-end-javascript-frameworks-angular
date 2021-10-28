@@ -13,3 +13,7 @@ export const ContactType = [
   'Tel',
   'Email'
 ]
+
+export class FeedbackWithId extends Feedback {
+  id!: number
+}

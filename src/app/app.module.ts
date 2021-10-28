@@ -38,6 +38,7 @@ import { LeaderService } from './services/leader.service';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { PromotionService } from './services/promotion.service';
 import { HighlightDirective } from './directives/highlight.directive';
+import { FeedbackService } from './services/feedback.service';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     DishService,
     LeaderService,
     ProcessHTTPMsgService,
-    PromotionService
+    PromotionService,
+    FeedbackService
   ],
   // entryComponents: [
   //   LoginComponent

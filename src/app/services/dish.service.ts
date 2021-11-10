@@ -27,14 +27,14 @@ export class DishService {
   }
 
   getFeaturedDish(): Observable<Dish> {
-    return this.http.get<Dish[]>(baseURL + '/dishes/?featured=true')
+    return this.http.get<Dish[]>(baseURL + '/dishes?featured=true')
       .pipe(map(dishes => dishes[0]))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   getDishIds(): Observable<string[] | any> {
     return this.getDishes()
-      .pipe(map((dishes: Dish[] | any) => dishes.map((dish: Dish) => dish.id)))
+      .pipe(map((dishes: Dish[] | any) => dishes.map((dish: Dish) => dish._id)))
       .pipe(catchError(error => error));
   }
 
@@ -45,7 +45,12 @@ export class DishService {
       })
     };
 
-    return this.http.put<Dish>(baseURL + `/dishes/${dish.id}`, dish, httpOptions)
+    return this.http.put<Dish>(baseURL + `/dishes/${dish._id}`, dish, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  postComment(dishId: string, comment: any) {
+    return this.http.post(baseURL + '/dishes/' + dishId + '/comments', comment)
+    .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

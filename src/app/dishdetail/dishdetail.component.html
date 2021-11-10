@@ -14,7 +14,7 @@
         </mat-card-title>
       </mat-card-header>
 
-      <img mat-card-image src="{{ BaseURL + dish.image }}" alt="{{ dish.name }}">
+      <img mat-card-image src="{{ BaseURL + '/' +dish.image }}" alt="{{ dish.name }}">
 
       <mat-card-content>
         <p>{{ dish.description }}</p>
@@ -24,9 +24,9 @@
         <button mat-button [routerLink]="['/dishdetail',prev]">
           <span class="fa fa-chevron-left fa-lg"></span>
         </button>
-        <button mat-button (click)="goBack()">BACK</button>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <button mat-button (click)="goBack()"><span class="fa fa-arrow-left fa-lg"></span></button>
+        <button mat-button (click)="addToFavorites()"><span class="{{favorite ? 'fa fa-heart fa-lg' : 'fa fa-heart-o fa-lg'}}"></span></button>
+        <button mat-button><span class="fa fa-share fa-lg"></span></button>
         <span class="flex-spacer"></span>
         <button mat-button [routerLink]="['/dishdetail',next]">
           <span class="fa fa-chevron-right fa-lg"></span>
@@ -48,7 +48,7 @@
           <mat-list-item *ngFor="let comment of dish.comments">
             <p mat-line>{{ comment.comment }}</p>
             <p mat-line>{{ comment.rating }} Stars</p>
-            <p mat-line>-- {{ comment.author }} {{comment.date | date}}</p>
+            <p mat-line>-- {{ comment.author.firstname }} {{ comment.author.lastname }}, {{comment.date | date}}</p>
           </mat-list-item>
           <mat-list-item *ngIf="commentForm && commentForm.valid">
             <p mat-line>{{ commentForm.value.comment }}</p>
@@ -60,12 +60,6 @@
       
       <div class="form-size">
         <form novalidate [formGroup]="commentForm" #cform="ngForm" action="" (ngSubmit)="onSubmit()">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="author" placeholder="Name" type="text" required>
-            <mat-error *ngIf="formErrors.author">
-              {{ formErrors.author }}
-            </mat-error>
-          </mat-form-field>
           <mat-slider formControlName="rating" thumbLabel tickInterval="1" min="1" max="5" step="1"></mat-slider>
           <mat-form-field class="full-width">
             <textarea matInput formControlName="comment" placeholder="Your comment" rows=12 required></textarea>

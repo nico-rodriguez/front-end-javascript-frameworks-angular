@@ -12,19 +12,19 @@
         <h3>{{dish.name | uppercase}}</h3>
       </mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{ BaseURL + dish.image }}" alt={{dish.name}}>
+    <img mat-card-image src="{{ BaseURL + '/' + dish.image }}" alt={{dish.name}}>
     <mat-card-content>
       <p>{{dish.description}}
       </p>
     </mat-card-content>
   </mat-card>
-  <div fxFlex [hidden]="dish || errMsg">
+  <div fxFlex [hidden]="dish || dishErrMess">
     <mat-spinner></mat-spinner><h4>Loading featured dish . . . Please wait</h4>
   </div>
 
-  <div fxFlex *ngIf="errMsg">
+  <div fxFlex *ngIf="dishErrMess">
     <h2>Error</h2>
-    <h4>{{ errMsg }}</h4>
+    <h4>{{ dishErrMess }}</h4>
   </div>
 
   <mat-card *ngIf="promotion" fxFlex [@expand]>
@@ -34,14 +34,18 @@
         <h3>{{promotion.name | uppercase}}</h3>
       </mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{ BaseURL + promotion.image }}" alt={{promotion.name}}>
+    <img mat-card-image src="{{ BaseURL + '/' + promotion.image }}" alt={{promotion.name}}>
     <mat-card-content>
       <p>{{promotion.description}}
       </p>
     </mat-card-content>
   </mat-card>
-  <div fxFlex [hidden]="promotion">
+  <div fxFlex [hidden]="promotion || promoErrMess">
     <mat-spinner></mat-spinner><h4>Loading featured promotion . . . Please wait</h4>
+  </div>
+  <div *ngIf="promoErrMess">
+    <h2>Error</h2>
+    <h4>{{promoErrMess}}</h4>
   </div>
 
   <mat-card *ngIf="leader" fxFlex [@expand]>
@@ -51,14 +55,18 @@
         <h3>{{leader.name | uppercase}}</h3>
       </mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{ BaseURL + leader.image }}" alt={{leader.name}}>
+    <img mat-card-image src="{{ BaseURL + '/' + leader.image }}" alt={{leader.name}}>
     <mat-card-content>
       <p>{{leader.description}}
       </p>
     </mat-card-content>
   </mat-card>
-  <div fxFlex [hidden]="leader">
+  <div fxFlex [hidden]="leader || leaderErrMess">
     <mat-spinner></mat-spinner><h4>Loading featured leader . . . Please wait</h4>
+  </div>
+  <div *ngIf="leaderErrMess">
+    <h2>Error</h2>
+    <h4>{{leaderErrMess}}</h4>
   </div>
 
 </div>

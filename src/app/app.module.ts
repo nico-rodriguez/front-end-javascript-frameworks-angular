@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -39,6 +39,10 @@ import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { PromotionService } from './services/promotion.service';
 import { HighlightDirective } from './directives/highlight.directive';
 import { FeedbackService } from './services/feedback.service';
+import { FavoritesComponent } from './favorites/favorites.component';
+import { AuthService } from './services/auth.service';
+import { FavoriteService } from './services/favorite.service';
+import { AuthInterceptor, UnauthorizedInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,8 @@ import { FeedbackService } from './services/feedback.service';
     HomeComponent,
     MenuComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +82,19 @@ import { FeedbackService } from './services/feedback.service';
   ],
   providers: [
     { provide: 'BaseURL', useValue: baseURL},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    },
+    AuthService,
     DishService,
+    FavoriteService,
     LeaderService,
     ProcessHTTPMsgService,
     PromotionService,

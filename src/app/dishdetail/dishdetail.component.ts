@@ -8,6 +8,7 @@ import { Comment } from '../shared/comment';
 import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { visibility, flyInOut, expand } from '../animations/app.animations';
+import { FavoriteService } from '../services/favorite.service';
 
 @Component({
   selector: 'app-dishdetail',
@@ -33,21 +34,16 @@ export class DishDetailComponent implements OnInit {
 
   comment!: Comment;
   commentForm!: FormGroup;
-  dishCopy!: Dish | null;
   visibility = 'shown';
+  favorite: boolean = false;
 
   @ViewChild('cform') commentFormDirective: any;
 
   formErrors = {
-    'author': '',
     'comment': ''
   }
 
   validationMessages = {
-    'author': {
-      'required': 'Author name is required',
-      'minlength': 'Author name must be at least 2 characters long'
-    },
     'comment': {
       'required': 'A comment is required'
     }
@@ -55,6 +51,7 @@ export class DishDetailComponent implements OnInit {
 
   constructor(
     private dishService: DishService,
+    private favoriteService: FavoriteService,
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
@@ -73,9 +70,11 @@ export class DishDetailComponent implements OnInit {
       }))
       .subscribe(dish => {
         this.dish = dish;
-        this.dishCopy = dish;
-        this.setPrevNext(dish.id);
+        this.setPrevNext(dish._id);
         this.visibility = 'shown';
+        this.favoriteService.isFavorite(this.dish._id)
+          .subscribe(resp => { console.log(resp); this.favorite = <boolean>resp.exists; },
+            err => console.log(err));
       },
         errMsg => this.errMsg = errMsg);
   }
@@ -92,9 +91,8 @@ export class DishDetailComponent implements OnInit {
 
   createForm(): void {
     this.commentForm = this.fb.group({
-      author: ['', [Validators.required, Validators.minLength(2)]],
       rating: 5,
-      comment: ''
+      comment: ['', Validators.required]
     });
 
     this.commentForm.valueChanges
@@ -129,23 +127,19 @@ export class DishDetailComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.comment = {...this.commentForm.value, date: new Date().toISOString()};
-    console.log(this.comment);
-    (<Dish>this.dishCopy).comments.push(this.comment);
-    this.dishService.putDish(<Dish>this.dishCopy)
-      .subscribe(dish => {
-        this.dish = dish;
-      }, errMsg => {
-        this.errMsg = errMsg;
-        this.dish = null;
-        this.dishCopy = null;
-      })
+    this.dish && this.dishService.postComment(this.dish._id, this.commentForm.value)
+      .subscribe(dish => this.dish = <Dish>dish);
     this.commentFormDirective.resetForm();
     this.commentForm.reset({
-      author: '',
       rating: 5,
       comment: ''
     });
   }
 
+  addToFavorites() {
+    if (!this.favorite) {
+      this.dish && this.favoriteService.postFavorite(this.dish._id)
+        .subscribe(favorites => { console.log(favorites); this.favorite = true; });
+    }
+  }
 }
